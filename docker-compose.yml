@@ -1,0 +1,112 @@
+version: "3"
+services:
+  db:
+    container_name: ichigo-db
+    image: ichigo-db
+    build:
+      context: .
+      dockerfile: infra/docker/mysql/Dockerfile
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 3308:3306
+    networks:
+      ichigo_net:
+        ipv4_address: '173.21.0.3'
+
+  backend:
+    container_name: ichigo-backend
+    image: ichigo-backend
+    build:
+      context: .
+      dockerfile: infra/docker/rails/Dockerfile
+    env_file:
+      - .env
+    command: >
+      /bin/sh -c
+        "rm -f tmp/pids/server.pid &&
+        bundle install &&
+        bin/rails s -p 3001 -b 0.0.0.0"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./backend:/rails
+      - bundle:/rails/vendor/bundle
+      # exclude volumes
+      - /rails/tmp
+      - /rails/log
+      - /rails/.git
+    ports:
+      - 3001:3001
+    networks:
+      ichigo_net:
+        ipv4_address: '173.21.0.4'
+
+  frontend:
+    container_name: ichigo-frontend
+    image: ichigo-frontend
+    build:
+      context: .
+      dockerfile: infra/docker/nuxt/Dockerfile
+      args:
+        APP_ROOT: frontend
+    env_file:
+      - .env
+    command: >
+      /bin/sh -c
+        "yarn install &&
+        yarn dev"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./frontend:/nuxt
+      - node_modules:/nuxt/node_modules
+      # exclude volumes
+      - /nuxt/.nuxt
+    ports:
+      - 3000:3000
+    networks:
+      ichigo_net:
+        ipv4_address: '173.21.0.5'
+
+  redis:
+    container_name: ichigo-redis
+    image: ichigo-redis
+    build:
+      context: .
+      dockerfile: infra/docker/redis/Dockerfile
+    command: redis-server
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./infra/docker/volumes/redis:/data
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+    sysctls:
+      - net.core.somaxconn=511
+    networks:
+      ichigo_net:
+        ipv4_address: '173.21.0.6'
+
+networks:
+  ichigo_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.21.0.0/24
+
+volumes:
+  mysql_data:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
+    driver: local

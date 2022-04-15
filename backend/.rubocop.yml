@@ -1,0 +1,110 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+
+# 一行あたりの文字数制限をなくす
+Layout/LineLength:
+  Enabled: false
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# 複数行での「lambda」で「->」による省略記法を許可
+Style/Lambda:
+  Enabled: false
+
+# モジュール名::クラス名の定義を許可
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# メソッド名のprefixに「set_」「get_」を許可
+Naming/AccessorMethodName:
+  Enabled: false
+
+# クラスにコメントを残さない
+Style/Documentation:
+  Enabled: false
+
+# ネストが深すぎる
+Metrics/BlockNesting:
+  Max: 5
+
+# クラスの行数が多すぎる
+Metrics/ClassLength:
+  Enabled: false
+
+# メソッドの行数が多すぎる
+Metrics/MethodLength:
+  Enabled: false
+
+# ブロックの行数が多すぎる
+Metrics/BlockLength:
+  Enabled: false
+
+# AbcSize(1行の長さ、1メソッドの大きさ、制御構文の数などの総合値)
+Metrics/AbcSize:
+  Max: 60
+
+# isやhasをつけられない
+Naming/PredicateName:
+  Enabled: false
+
+# returnを省略しない場合も許可
+Style/RedundantReturn:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+RSpec/ExampleLength:
+  Max: 30
+
+# contextの'when','with','without'以外のprefixes記述を許可
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 8
+
+# ファイルパスの区切りを引数で指定する
+# example:
+#   Rails.root.join("app", "controllers", "application_controller.rb")
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Max: 7
+
+Metrics/PerceivedComplexity:
+  Max: 30
+
+Metrics/CyclomaticComplexity:
+  Max: 30
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+  TargetRailsVersion: 6.1
+  Exclude:
+    - db/schema.rb
+    - tmp/**/*
+    - vendor/**/*
+    - node_modules/**/*
+    - bin/**/*
