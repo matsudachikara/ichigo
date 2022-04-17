@@ -10,12 +10,30 @@ CompletedOrder.seed do |s|
 end
 
 CompletedOrder.seed do |s|
+  s.id = 1
+  s.customer_id = 1
+  s.order_id = 1
+  s.customer_name = 'customer1'
+  s.total_in_cents = 4000
+  s.order_date = DateTime.new(2022, 1, 1)
+end
+
+CompletedOrder.seed do |s|
   s.id = 2
   s.customer_id = 2
   s.order_id = 2
   s.customer_name = 'customer2'
   s.total_in_cents = 10_000
   s.order_date = DateTime.new(2021, 1, 1)
+end
+
+CompletedOrder.seed do |s|
+  s.id = 2
+  s.customer_id = 2
+  s.order_id = 2
+  s.customer_name = 'customer2'
+  s.total_in_cents = 10_000
+  s.order_date = DateTime.new(2022, 1, 1)
 end
 
 CompletedOrder.seed do |s|

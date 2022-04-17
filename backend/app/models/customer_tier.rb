@@ -20,7 +20,8 @@ class CustomerTier < ApplicationRecord
                      when 'silver'
                        TIER_CONDITIONS[:gold] - dollars_spent_this_year
                      when 'gold'
-                       0
+                      # when it's gold, it returns dollars needed to keep gold tier
+                      TIER_CONDITIONS[:gold] - dollars_spent_this_year
                      end
     if dollars_needed.negative?
       return 0
@@ -58,13 +59,26 @@ class CustomerTier < ApplicationRecord
     tier === next_tier ? nil : next_tier
   end
 
+  def next_year_tier
+    case customer.dollars_spent_this_year
+    when CustomerTier::TIER_CONDITIONS[:bronze]...CustomerTier::TIER_CONDITIONS[:silver]
+      'bronze'
+    when CustomerTier::TIER_CONDITIONS[:silver]...CustomerTier::TIER_CONDITIONS[:gold]
+      'silver'
+    when CustomerTier::TIER_CONDITIONS[:gold]...Float::INFINITY
+      'gold'
+    end
+  end
+
   def to_json_for_api
     {
       customer_id: customer_id,
       customer_name: customer.name,
       current_tier: tier,
+      next_year_tier: next_year_tier,
       start_date: start_date,
       dollars_spent_since_start: dollars_spent_since_start + customer.dollars_spent_this_year,
+      dollars_spent_this_year: customer.dollars_spent_this_year,
       dollars_needed_for_next_tier: dollars_needed_for_next_tier,
       dollars_needed_to_keep_tier: dollars_needed_to_keep_tier,
       tier_downgraded_next_year: tier_downgraded_next_year,
