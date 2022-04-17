@@ -4,8 +4,9 @@
     <table>
       <thead>
         <tr>
+          <th>Customer ID</th>
           <th>Customer Name</th>
-          <th>Current tier</th>
+          <th>Current Tier</th>
           <th>Start Date</th>
           <th>Amount spent since that start date</th>
           <th>Amount that must be spent in order to reach the next tier</th>
@@ -18,17 +19,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(order, i) in orders.data" :key="order.id">
-          <th>{{ order.order_id }}</th>
-          <td>
-            {{ order.customer_name }}
-          </td>
-          <td>
-            {{ order.total_in_cents }}
-          </td>
-          <td>
-            {{ order.order_date }}
-          </td>
+        <tr>
+          <th>{{ tier.customer_id }}</th>
+          <th>{{ tier.customer_name }}</th>
+          <td>{{ tier.current_tier }}</td>
+          <td>{{ tier.start_date }}</td>
+          <td>{{ tier.dollars_spent_since_start }}</td>
+          <td>{{ tier.dollars_needed_for_next_tier }}</td>
+          <td>{{ tier.tier_downgraded_next_year }}</td>
+          <td>{{ tier.end_date }}</td>
+          <td>{{ tier.dollars_needed_to_keep_tier }}</td>
         </tr>
       </tbody>
     </table>
@@ -41,14 +41,14 @@ export default {
   components: {},
   data() {
     return {
-      orders: this.$store.getters['models/completed_order/list'],
+      tier: this.$store.getters['models/customer_tier/object'],
     }
   },
   watch: {
     '$route.query': '$fetch',
   },
   async fetch({ store, params }) {
-    await store.dispatch('models/completed_order/getList', params.id)
+    await store.dispatch('models/customer_tier/getObject', params.id)
   },
   methods: {},
 }

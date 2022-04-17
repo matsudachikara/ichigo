@@ -6,7 +6,8 @@ end
 create_table "customer_tiers", charset: "utf8mb4", force: :cascade do |t|
   t.references :customer, null: false, index: { unique: true }, foreign_key: true
   t.integer :tier, null: false, default: 0
-  t.datetime :start_date
+  t.datetime :start_date, null: false
+  t.datetime :end_date, null: false
   t.integer :dollars_spent_since_start, null: false
   t.timestamps null: false, default: ->{ "CURRENT_TIMESTAMP(6)" }, precision: 6
 end

@@ -17,6 +17,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'bronze'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 0
         end
       end
@@ -38,6 +39,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'bronze'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 10
         end
       end
@@ -59,6 +61,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'silver'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 100
         end
       end
@@ -80,6 +83,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'gold'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 500
         end
       end
@@ -101,6 +105,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'silver'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 100
         end
       end
@@ -122,6 +127,7 @@ RSpec.describe CreateCustomerTierService do
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'gold'
           expect(customer.customer_tier.start_date).to eq Time.zone.local(2021, 1, 1, 0, 0, 0)
+          expect(customer.customer_tier.end_date).to be_within(1.second).of Time.zone.local(2021, 12, 31, 23, 59, 59)
           expect(customer.customer_tier.dollars_spent_since_start).to eq 500
         end
       end

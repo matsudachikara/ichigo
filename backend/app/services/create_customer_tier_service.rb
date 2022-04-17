@@ -16,11 +16,10 @@ class CreateCustomerTierService
     # calculate tier based on orders between start of last year and end of last year
     start_date = Date.current.last_year.beginning_of_year.beginning_of_day
     end_date = Date.current.last_year.end_of_year.end_of_day
-    orders_total_in_cents = @customer.completed_orders
-                                     .where(order_date: start_date...end_date)
-                                     .sum(:total_in_cents)
+    orders_total_in_cents = @customer.orders_total_in_cents(start_date: start_date, end_date: end_date)
 
     @customer_tier.start_date = start_date
+    @customer_tier.end_date = end_date
     @customer_tier.dollars_spent_since_start = orders_total_in_cents / 100
 
     case @customer_tier.dollars_spent_since_start
