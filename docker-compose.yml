@@ -8,7 +8,7 @@ services:
       dockerfile: infra/docker/mysql/Dockerfile
     environment:
       TZ: Asia/Tokyo
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     cap_add:
       - SYS_NICE
     volumes:
@@ -17,7 +17,7 @@ services:
       - 3308:3306
     networks:
       ichigo_net:
-        ipv4_address: '173.21.0.3'
+        ipv4_address: "173.21.0.3"
 
   backend:
     container_name: ichigo-backend
@@ -45,7 +45,35 @@ services:
       - 3001:3001
     networks:
       ichigo_net:
-        ipv4_address: '173.21.0.4'
+        ipv4_address: "173.21.0.4"
+
+  worker:
+    container_name: ichigo-worker
+    image: ichigo-worker
+    build:
+      context: .
+      dockerfile: infra/docker/rails/Dockerfile
+    env_file:
+      - .env
+    command: >
+      /bin/sh -c
+        "rm -f tmp/pids/server.pid &&
+        bundle install &&
+        bundle exec sidekiq -C config/sidekiq.yml"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./backend:/rails
+      - bundle:/rails/vendor/bundle
+      # exclude volumes
+      - /rails/tmp
+      - /rails/log
+      - /rails/.git
+    ports:
+      - 3002:3002
+    networks:
+      ichigo_net:
+        ipv4_address: "173.21.0.5"
 
   frontend:
     container_name: ichigo-frontend
@@ -72,7 +100,7 @@ services:
       - 3000:3000
     networks:
       ichigo_net:
-        ipv4_address: '173.21.0.5'
+        ipv4_address: "173.21.0.6"
 
   redis:
     container_name: ichigo-redis
@@ -93,7 +121,7 @@ services:
       - net.core.somaxconn=511
     networks:
       ichigo_net:
-        ipv4_address: '173.21.0.6'
+        ipv4_address: "173.21.0.6"
 
 networks:
   ichigo_net:

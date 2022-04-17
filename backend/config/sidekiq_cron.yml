@@ -1,0 +1,4 @@
+customer_tier_worker:
+  cron: "0 0 1 1 *" # 1st of January every year
+  class: "CustomerTierWorker"
+  queue: default

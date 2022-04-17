@@ -28,6 +28,8 @@ gem 'kaminari'
 gem 'rack-cors'
 gem 'ridgepole'
 gem 'seed-fu'
+gem 'sidekiq'
+gem 'sidekiq-cron'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
