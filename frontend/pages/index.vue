@@ -1,12 +1,28 @@
 <template>
-  <div class="index-container">
-    <div class="title">Customers</div>
-    <a
-      v-for="(customer, i) in customers.data"
-      :key="i"
-      :href="link_url(customer)"
-      >{{ customer.name }}</a
-    >
+  <div>
+    <div class="title">Customer List</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Tier</th>
+          <th>Order List</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(customer, i) in customers.data" :key="customer.id">
+          <th>{{ customer.name }}</th>
+          <td>
+            <nuxt-link :to="`/customers/${customer.id}/tier`">view</nuxt-link>
+          </td>
+          <td>
+            <nuxt-link :to="`/customers/${customer.id}/orderList`"
+              >view</nuxt-link
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -28,20 +44,8 @@ export default {
       customers: 'customers',
     }),
   },
-  methods: {
-    link_url(customer) {
-      return `/customers/${customer.id}`
-    },
-  },
+  methods: {},
 }
 </script>
 
-<style lang="scss">
-.index-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-</style>
+<style lang="scss"></style>
