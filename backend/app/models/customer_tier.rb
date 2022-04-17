@@ -13,20 +13,13 @@ class CustomerTier < ApplicationRecord
   # 🥇 Gold = at least $500 spent between the start of last year and end of last year
 
   def dollars_needed_for_next_tier
-    dollars_spent_this_year = customer.dollars_spent_this_year
-    dollars_needed = case tier
-                     when 'bronze'
-                       TIER_CONDITIONS[:silver] - dollars_spent_this_year
-                     when 'silver'
-                       TIER_CONDITIONS[:gold] - dollars_spent_this_year
-                     when 'gold'
-                      # when it's gold, it returns dollars needed to keep gold tier
-                      TIER_CONDITIONS[:gold] - dollars_spent_this_year
-                     end
-    if dollars_needed.negative?
-      return 0
-    else
-      return dollars_needed
+    case tier
+    when 'bronze'
+      TIER_CONDITIONS[:silver]
+    when 'silver'
+      TIER_CONDITIONS[:gold]
+    when 'gold'
+      TIER_CONDITIONS[:gold]
     end
   end
 

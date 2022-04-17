@@ -20,7 +20,7 @@
             </div>
             <div class="progress-numbers">
               ${{ tier.dollars_spent_this_year }} / ${{
-                tier.dollars_needed_for_next_tier + tier.dollars_spent_this_year
+                tier.dollars_needed_for_next_tier
               }}
             </div>
           </div>
@@ -78,8 +78,7 @@ export default {
       return {
         '--progress-bar-width': `${
           (this.tier.dollars_spent_this_year /
-            (this.tier.dollars_needed_for_next_tier +
-              this.tier.dollars_spent_this_year)) *
+            this.tier.dollars_needed_for_next_tier) *
           100
         }%`,
       }
