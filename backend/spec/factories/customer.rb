@@ -14,10 +14,10 @@ FactoryBot.define do
     after(:create) do |customer, evaluator|
       evaluator.completed_order_count.times do
         create :completed_order,
-                customer: customer,
-                customer_name: customer.name,
-                total_in_cents: evaluator.total_in_cents,
-                order_date: evaluator.order_date
+               customer: customer,
+               customer_name: customer.name,
+               total_in_cents: evaluator.total_in_cents,
+               order_date: evaluator.order_date
       end
     end
   end

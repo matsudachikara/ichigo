@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe CreateCustomerTierService do
   describe '#call' do
-
     around do |e|
       travel_to(Time.zone.local(2022, 1, 1, 0, 0, 0)) { e.run }
     end
@@ -12,7 +11,7 @@ RSpec.describe CreateCustomerTierService do
     context 'when customer spent $0 last year' do
       let(:customer) { create(:customer) }
 
-      it 'should create customer tier' do
+      it 'creates customer tier' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'bronze'
@@ -24,7 +23,7 @@ RSpec.describe CreateCustomerTierService do
     end
 
     context 'when customer spent $10 last year' do
-      let(:customer) {
+      let(:customer) do
         create(
           :customer,
           :with_completed_orders,
@@ -32,9 +31,9 @@ RSpec.describe CreateCustomerTierService do
           total_in_cents: 1000,
           order_date: Time.zone.local(2021, 1, 1, 0, 0, 0)
         )
-      }
+      end
 
-      it 'should create customer tier with bronze' do
+      it 'creates customer tier with bronze' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'bronze'
@@ -46,17 +45,17 @@ RSpec.describe CreateCustomerTierService do
     end
 
     context 'when customer spent $100 last year' do
-      let(:customer) {
+      let(:customer) do
         create(
           :customer,
           :with_completed_orders,
           completed_order_count: 1,
-          total_in_cents: 10000,
+          total_in_cents: 10_000,
           order_date: Time.zone.local(2021, 12, 31, 23, 59, 59)
         )
-      }
+      end
 
-      it 'should create customer tier with silver' do
+      it 'creates customer tier with silver' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'silver'
@@ -68,17 +67,17 @@ RSpec.describe CreateCustomerTierService do
     end
 
     context 'when customer spent $500 last year' do
-      let(:customer) {
+      let(:customer) do
         create(
           :customer,
           :with_completed_orders,
           completed_order_count: 1,
-          total_in_cents: 50000,
+          total_in_cents: 50_000,
           order_date: Time.zone.local(2021, 12, 31, 23, 59, 59)
         )
-      }
+      end
 
-      it 'should create customer tier with gold' do
+      it 'creates customer tier with gold' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'gold'
@@ -90,7 +89,7 @@ RSpec.describe CreateCustomerTierService do
     end
 
     context 'when customer spent $100 in total last year' do
-      let(:customer) {
+      let(:customer) do
         create(
           :customer,
           :with_completed_orders,
@@ -98,9 +97,9 @@ RSpec.describe CreateCustomerTierService do
           total_in_cents: 5000,
           order_date: Time.zone.local(2021, 12, 31, 23, 59, 59)
         )
-      }
+      end
 
-      it 'should create customer tier with silver' do
+      it 'creates customer tier with silver' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'silver'
@@ -112,17 +111,17 @@ RSpec.describe CreateCustomerTierService do
     end
 
     context 'when customer spent $500 in total last year' do
-      let(:customer) {
+      let(:customer) do
         create(
           :customer,
           :with_completed_orders,
           completed_order_count: 5,
-          total_in_cents: 10000,
+          total_in_cents: 10_000,
           order_date: Time.zone.local(2021, 12, 31, 23, 59, 59)
         )
-      }
+      end
 
-      it 'should create customer tier with gold' do
+      it 'creates customer tier with gold' do
         described_class.call(customer: customer)
         aggregate_failures do
           expect(customer.customer_tier.tier).to eq 'gold'
@@ -132,6 +131,5 @@ RSpec.describe CreateCustomerTierService do
         end
       end
     end
-
   end
 end
