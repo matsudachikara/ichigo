@@ -25,11 +25,17 @@
         </tr>
       </tbody>
     </table>
+    <Pagination
+      :current_page="customers.meta.current_page"
+      :total_pages="customers.meta.total_pages"
+      url="/"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Pagination from '~/components/Pagination'
 export default {
   components: {},
   data() {
