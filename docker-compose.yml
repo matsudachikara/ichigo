@@ -121,7 +121,7 @@ services:
       - net.core.somaxconn=511
     networks:
       ichigo_net:
-        ipv4_address: "173.21.0.6"
+        ipv4_address: "173.21.0.7"
 
 networks:
   ichigo_net:
