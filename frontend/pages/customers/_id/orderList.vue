@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div>Order List</div>
+    <div class="title">
+      <h1 class="title-text">Order List</h1>
+    </div>
     <table>
       <thead>
         <tr>
@@ -47,4 +49,14 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.title {
+  padding: 1rem 0;
+  background-color: #ffffff;
+  text-align: center;
+  &-text {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+</style>

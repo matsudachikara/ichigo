@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="title">Customer List</div>
+    <div class="title">
+      <h1 class="title-text">Customer List</h1>
+    </div>
     <table>
       <thead>
         <tr>
@@ -48,4 +50,27 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.title {
+  padding: 1rem 0;
+  background-color: #ffffff;
+  text-align: center;
+  &-text {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+th,
+td {
+  height: 40px;
+  padding: 0 1rem;
+  border-bottom: thin solid rgba(0, 0, 0, 0.12);
+  text-align: left;
+  font-weight: normal;
+}
+</style>

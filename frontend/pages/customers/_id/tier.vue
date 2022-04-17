@@ -97,7 +97,6 @@ export default {
 .title {
   padding: 1rem 0;
   background-color: #ffffff;
-  border-bottom: 1px solid #eeeeee;
   text-align: center;
   &-text {
     font-weight: bold;
