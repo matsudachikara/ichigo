@@ -94,15 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  padding: 1rem 0;
-  background-color: #ffffff;
-  text-align: center;
-  &-text {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-}
 .content {
   display: flex;
   justify-content: center;

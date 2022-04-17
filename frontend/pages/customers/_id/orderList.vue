@@ -49,14 +49,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.title {
-  padding: 1rem 0;
-  background-color: #ffffff;
-  text-align: center;
-  &-text {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-}
-</style>
+<style lang="scss"></style>
