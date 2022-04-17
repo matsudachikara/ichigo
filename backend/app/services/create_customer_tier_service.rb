@@ -28,7 +28,7 @@ class CreateCustomerTierService
       @customer_tier.tier = 'bronze'
     when CustomerTier::TIER_CONDITIONS[:silver]...CustomerTier::TIER_CONDITIONS[:gold]
       @customer_tier.tier = 'silver'
-    when CustomerTier::TIER_CONDITIONS[:gold]..Float::INFINITY
+    when CustomerTier::TIER_CONDITIONS[:gold]...Float::INFINITY
       @customer_tier.tier = 'gold'
     end
     @customer_tier.save!
