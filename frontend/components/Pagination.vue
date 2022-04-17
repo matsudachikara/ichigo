@@ -1,7 +1,7 @@
 <template>
   <nav class="pagination">
     <a
-      :href="`${url}?page=${prev_page()}`"
+      :href="`${createUrl(url)}?page=${prev_page()}`"
       class="pagination-previous"
       :class="addCurrentPageClass(prev_page())"
     >
@@ -10,7 +10,7 @@
     <ul class="pagination-list">
       <li v-for="num in paginationArray" :key="num">
         <a
-          :href="`${url}?page=${num}`"
+          :href="`${createUrl(url)}?page=${num}`"
           class="pagination-link"
           :class="addCurrentPageClass(num)"
           >{{ num }}
@@ -18,7 +18,7 @@
       </li>
     </ul>
     <a
-      :href="`${url}?page=${next_page()}`"
+      :href="`${createUrl(url)}?page=${next_page()}`"
       class="pagination-next"
       :class="addCurrentPageClass(next_page())"
     >
@@ -79,6 +79,11 @@ export default {
       return this.current_page !== this.end_page
         ? this.current_page + 1
         : this.current_page
+    },
+    createUrl({ params }) {
+      // create Url with path parameter
+      const regex = /\?/
+      return this.url.replace(regex, this.$route.params.id)
     },
   },
 }

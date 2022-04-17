@@ -27,6 +27,11 @@
         </tr>
       </tbody>
     </table>
+    <Pagination
+      :current_page="orders.meta.current_page"
+      :total_pages="orders.meta.total_pages"
+      url="/customers/?/orderList"
+    />
   </div>
 </template>
 
@@ -42,8 +47,12 @@ export default {
   watch: {
     '$route.query': '$fetch',
   },
-  async fetch({ store, params }) {
-    await store.dispatch('models/completed_order/getList', params.id)
+  async fetch({ store, params, route }) {
+    await store.dispatch('models/completed_order/getList', {
+      id: params.id,
+      page: route.query.page,
+      per: 12,
+    })
   },
   methods: {},
 }
